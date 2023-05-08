@@ -1,0 +1,32 @@
+name: GitHub Actions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_terraform:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: install terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: init terraform
+        run: terraform init
+        
+      - name: plan terraform
+        run: terraform plan
+
+      - name: apply terraform
+        run: terraform apply -auto-approve
+
+      - name: run script
+        run: python hello.py
